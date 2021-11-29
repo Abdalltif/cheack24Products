@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_nav_graph"
+    app:startDestination="@id/productsFragment">
+
+    <fragment
+        android:id="@+id/productsFragment"
+        android:name="com.abdalltif.check24.presentation.fragments.products_list.ProductsListFragment"
+        android:label="fragment_products"
+        tools:layout="@layout/fragment_products" >
+        <action
+            android:id="@+id/action_navigate_to_detailsFragment"
+            app:destination="@id/detailsFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_productsFragment_to_webviewFragment"
+            app:destination="@id/webviewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.abdalltif.check24.presentation.fragments.product_details.ProductDetailsFragment"
+        android:label="fragment_details"
+        tools:layout="@layout/fragment_product_details" >
+        <action
+            android:id="@+id/action_navigate_to_productsFragment"
+            app:destination="@id/productsFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+        <argument
+            android:name="product"
+            app:argType="com.abdalltif.check24.domain.entities.product.Product" />
+        <action
+            android:id="@+id/action_detailsFragment_to_webviewFragment"
+            app:destination="@id/webviewFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/webviewFragment"
+        android:name="com.abdalltif.check24challenge.presentation.fragments.WebviewFragment"
+        android:label="fragment_webview"
+        tools:layout="@layout/fragment_webview" >
+        <action
+            android:id="@+id/action_webviewFragment_to_productsFragment"
+            app:destination="@id/productsFragment" />
+    </fragment>
+</navigation>

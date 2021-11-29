@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Check24 Challenge</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="unfavorie">UnFavorite</string>
+    <string name="footer">© 2016 Check24</string>
+</resources>
