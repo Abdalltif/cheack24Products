@@ -7,6 +7,7 @@ import com.abdalltif.check24.domain.entities.product.Product
 import com.abdalltif.check24.domain.use_cases.get_products.GetProductsUseCase
 import com.abdalltif.check24challenge.common.Resource
 import com.google.common.truth.Truth
+import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -27,22 +28,27 @@ class GetProductsUseCaseTest {
     }
 
     @Test
-    fun `getting products is in loading state, is true`() = runBlocking {
-        Truth.assertThat(getProductsUseCase().first()).isInstanceOf(Resource.Loading::class.java)
+    fun `get products is alwaays in loading state at first emit`() = runBlocking {
+        assertThat(getProductsUseCase().first()).isInstanceOf(Resource.Loading::class.java)
     }
 
     @Test
-    fun `getting products is success, is true`() = runBlocking {
-        Truth.assertThat(getProductsUseCase().drop(1).first()).isInstanceOf(Resource.Success::class.java)
+    fun `get products is success state, is true`() = runBlocking {
+        assertThat(getProductsUseCase().drop(1).first()).isInstanceOf(Resource.Success::class.java)
     }
 
     @Test
-    fun `products list is not null, is true`() = runBlocking {
-        Truth.assertThat(getProductsUseCase().drop(1).first().data).isNotNull()
+    fun `products list never return null`() = runBlocking {
+        assertThat(getProductsUseCase().drop(1).first().data).isNotNull()
     }
 
     @Test
-    fun `products list size equals 6, is true`() = runBlocking {
+    fun `products list size equals to 0, is true`() = runBlocking {
+        assertThat(getProductsUseCase().drop(1).first().data!!.size).isEqualTo(0)
+    }
+
+    @Test
+    fun `products list size equals to 6, is true`() = runBlocking {
         for (i in 0..5) {
             products.add(i, ProductDto(true, "", "",
                 "description $i", i, "", "Long description $i",
@@ -50,7 +56,7 @@ class GetProductsUseCaseTest {
                 2021, "type $i")
             )
         }
-        Truth.assertThat(getProductsUseCase().drop(1).first().data!!.size).isEqualTo(6)
+        assertThat(getProductsUseCase().drop(1).first().data!!.size).isEqualTo(6)
     }
 
     @Test
@@ -60,7 +66,7 @@ class GetProductsUseCaseTest {
             "Product 1", Price("EUR", 34.5), 4.0,
             2021, "type 1")
         )
-        Truth.assertThat(getProductsUseCase().drop(1).first().data?.get(0)).isInstanceOf(Product::class.java)
+        assertThat(getProductsUseCase().drop(1).first().data?.get(0)).isInstanceOf(Product::class.java)
     }
 
     @Test
@@ -72,11 +78,11 @@ class GetProductsUseCaseTest {
                 2021, "type $i")
             )
         }
-        Truth.assertThat(getProductsUseCase().drop(1).first().data).isNotEmpty()
+        assertThat(getProductsUseCase().drop(1).first().data).isNotEmpty()
     }
 
     @Test
     fun `products list is empty, is true`() = runBlocking {
-        Truth.assertThat(getProductsUseCase().drop(1).first().data).isEmpty()
+        assertThat(getProductsUseCase().drop(1).first().data).isEmpty()
     }
 }

@@ -45,11 +45,6 @@ class ProductsListFragment : Fragment(R.layout.fragment_products), ProductsAdapt
         return view
     }
 
-    override fun onResume() {
-        super.onResume()
-//        viewModel.getProducts()
-    }
-
     private val productsListStateObserver = Observer<ProductsListState> { state ->
         binding.swipe.isRefreshing = state.isLoading
 
