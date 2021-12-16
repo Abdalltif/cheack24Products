@@ -4,6 +4,7 @@ import com.abdalltif.check24.data.remote.ProductsApi
 import com.abdalltif.check24.domain.repositories.IProductsRepository
 import com.abdalltif.check24challenge.common.Constants
 import com.abdalltif.check24challenge.data.repositories.ProductsRepository
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,6 +26,7 @@ class AppModule {
         logging.setLevel(HttpLoggingInterceptor.Level.BODY)
         val client = OkHttpClient.Builder()
             .addInterceptor(logging)
+            .addNetworkInterceptor(StethoInterceptor())
             .build()
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
